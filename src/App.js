@@ -8,6 +8,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav } from 'react-bootstrap';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Create } from './components/create';
+import { Read } from './components/read';
 
 //start of class
 class App extends Component {
@@ -27,8 +29,8 @@ class App extends Component {
           <br />
           <switch>
             <Route path='/' component={Content} extact />
-            <Route path='/create' component={Header} extact />
-            <Route path='/read' component={Footer} extact />
+            <Route path='/create' component={Create} extact />
+            <Route path='/read' component={Read} extact />
           </switch>
         </div>
       </Router>

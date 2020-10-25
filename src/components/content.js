@@ -1,7 +1,7 @@
 //import React
 import React from 'react';
 
-//start of class for header component 
+//start of class for Contect component 
 export class Content extends React.Component {
     render() {
         return (
