@@ -18,8 +18,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Navbar bg="dark" variant="dark">
-            <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+          <Navbar bg="primary" variant="dark">
             <Nav className="mr-auto">
               <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/read">Read</Nav.Link>
@@ -27,14 +26,14 @@ class App extends Component {
             </Nav>
           </Navbar>
           <br />
-          <switch>
-            <Route path='/' component={Content} extact />
-            <Route path='/create' component={Create} extact />
-            <Route path='/read' component={Read} extact />
-          </switch>
+          <Switch>
+            <Route path='/' component={Content} exact />
+            <Route exact path='/create' component={Create} />
+            <Route path='/read' component={Read} />
+          </Switch>
         </div>
       </Router>
-    );
+    );//end of router
   }//end of render
 }//end of class
 
