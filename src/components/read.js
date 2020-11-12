@@ -17,11 +17,11 @@ export class Read extends React.Component {
     //life cycle
     componentDidMount() {
         //Axios(Movie list resource list link)
-        axios.get('https://jsonblob.com/api/jsonblob/520c3b5e-0312-11eb-a6af-cbf00d776032')
+        axios.get('http://localhost:4000/api/movies')
             //fullfill state 
             .then((response) => {
                 //update arrays
-                this.setState({ movies: response.data.Search }) //if everythign is ok it will update
+                this.setState({ movies: response.data.myMovies }) //if everythign is ok it will update
             })//end of .then
 
             //alternative way
@@ -35,7 +35,7 @@ export class Read extends React.Component {
             <div>
                 <h1>This is the Create component</h1>
                 <Movies movies={this.state.movies}></Movies>
-                
+
             </div>
         );
     }//end of render

@@ -1,5 +1,6 @@
 //import React
 import React from 'react';
+import axios from 'axios';
 
 //start of class for Create component 
 export class Create extends React.Component {
@@ -13,7 +14,7 @@ export class Create extends React.Component {
         this.onChangeTitle = this.onChangeTitle.bind(this);
         this.onChangeYear = this.onChangeYear.bind(this);
         this.onChangePoster = this.onChangePoster.bind(this);
-        
+
         this.state = {
             Title: '',
             Year: '',
@@ -45,6 +46,24 @@ export class Create extends React.Component {
     onSubmit(e) {
         e.preventDefault();// to prevent it from calling multiple times 
         alert("Movie: " + this.state.Title + " " + this.state.Year + " " + this.state.Poster);
+
+        //Object of three values 
+        const newMovie = {
+            title: this.state.Title,
+            year: this.state.Year,
+            poster: this.state.Poster
+        }
+        axios.post('http://localhost:4002/api/movies', newMovie)
+
+            //error catching 
+            .then((res) => {
+                console.log(res);
+            })//end of then
+
+            .catch((err) => {
+                console.log(err);
+            });//End of error
+
     }//end of onSubmit
 
     render() {
