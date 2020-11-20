@@ -21,7 +21,7 @@ export class Read extends React.Component {
             //fullfill state 
             .then((response) => {
                 //update arrays
-                this.setState({ movies: response.data.myMovies }) //if everythign is ok it will update
+                this.setState({ movies: response.data }) //if everythign is ok it will update
             })//end of .then
 
             //alternative way
