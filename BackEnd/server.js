@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
 
 //Get Request to return the following data 
 app.get('/api/movies', (req, res) => {
-  // const movies = [
+  //const movies = [
   //   {
   //     "Title": "Avengers: Infinity War",
   //     "Year": "2018",
@@ -57,26 +57,43 @@ app.get('/api/movies', (req, res) => {
   //   }
   // ];
 
-  MovieModel.find((err, data) => {
-    res.json(data);
-  })
+})
+//End of api movies
 
-  //Pass it to server  
-  // res.status(200).json({
-  //   message: "Everything is good",
-  //   myMovies: movies
-  // })
-})//End of api movies
-
-//Method Listen fro get request
+//Method Listen for get request
 app.get('/api/movies/:id', (req, res, next) => {
   console.log(req.params.id);
   MovieModel.findById(req.params.id,
-  function (err, data) {
-  res.json(data);
-  });
-  })
-  
+    function (err, data) {
+      res.json(data);
+    });
+})
+
+//Update Movie
+app.put('/api/movies/:id', (req, res) => {
+  console.log("Update Movies: " + req.params.is);
+  console.log(req.body);
+
+  MovieModel.findByIdAndUpdate(req.params.id, req.body, { new: true },
+    (err, data) => {
+      res.send(data);
+      f
+    });
+})//End of update
+
+//Delete movies 
+app.delete('/api/movies/:id', function (req, res) {
+  console.log(req.params.id);
+
+  MovieModel.findByIdAndDelete({ _id: req.params.id },
+    function (err, data) {
+      if (err)
+        res.send(err);
+      res.send(data);
+    })
+})//End of delete
+
+
 //Express Server
 app.post('/api/movies', (req, res) => {
   console.log('Movie Recieved');
