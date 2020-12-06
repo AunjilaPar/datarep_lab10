@@ -3,7 +3,7 @@ import React from 'react';
 import axios from 'axios';
 
 //start of class for Create component 
-export class Create extends React.Component {
+export class Edit extends React.Component {
     //Forms
     constructor() {
         //to use the forms
@@ -22,6 +22,23 @@ export class Create extends React.Component {
         }//end of state
     }//end of constructor
 
+    //life cycle hook
+    componentDidMount() {
+        console.log(this.props.match.params.id);
+
+        axios.get('http://localhost:4000/api/movies/'+this.props.match.params.is)
+        .then(response=>{
+            this.setState({
+                _id:response.data._id,
+                Title:response.data.title,
+                Year:response.data.year,
+                Poster:response.data.poster
+            })
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+    }
     //Used when valour of input change method
     onChangeTitle(e) {
         this.setState({
@@ -51,18 +68,29 @@ export class Create extends React.Component {
         const newMovie = {
             title: this.state.Title,
             year: this.state.Year,
-            poster: this.state.Poster
+            poster: this.state.Poster,
+            _id:this.state._id
         }
-        axios.post('http://localhost:4000/api/movies', newMovie)
+        //axios takes url and passes data
+        axios.put('http://localhost:4000/api/movies/'+this.state._id,newMovie)
+        .then((res) => {
+            console.log(res.data)
+        })//end of then
+
+       .catch((err) => {
+            console.log(err);
+       });//End of error
+
+       // axios.post('http://localhost:4000/api/movies', newMovie)
 
             //error catching 
-            .then((res) => {
-                console.log(res);
-            })//end of then
+            //.then((res) => {
+                //console.log(res);
+           // })//end of then
 
-            .catch((err) => {
-                console.log(err);
-            });//End of error
+           // .catch((err) => {
+               // console.log(err);
+           // });//End of error
 
     }//end of onSubmit
 
@@ -96,7 +124,7 @@ export class Create extends React.Component {
                     </div>
                     <div className="form-group">
                         <input type='submit'
-                            value='Add Movie'
+                            value='Edit Movie'
                             className='btn btn-primary'>
                         </input>
                     </div>
