@@ -5,6 +5,7 @@ const port = 4000
 const cors = require('cors'); //install cors
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
+const path = require('path');
 
 //Use cors 
 app.use(cors());
@@ -15,6 +16,12 @@ app.use(function (req, res, next) {
     "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });//End of cors
+
+//Config fro html
+app.use(express.static(path.join(__dirname,'../build')));
+
+//Find static folder
+app.use('/static', express.static(path.join(__dirname, 'build//static')));
 
 // Parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -56,7 +63,9 @@ app.get('/api/movies', (req, res) => {
   //     "Poster": "https://m.media-amazon.com/images/M/MV5BMjQ0MTgyNjAxMV5BMl5BanBnXkFtZTgwNjUzMDkyODE@._V1_SX300.jpg"
   //   }
   // ];
-
+  MovieModel.find((err, data) => {
+    res.json(data);
+  })
 })
 //End of api movies
 
@@ -84,15 +93,13 @@ app.put('/api/movies/:id', (req, res) => {
 //Delete movies 
 app.delete('/api/movies/:id', function (req, res) {
   console.log(req.params.id);
-
-  MovieModel.findByIdAndDelete({ _id: req.params.id },
-    function (err, data) {
-      if (err)
-        res.send(err);
-      res.send(data);
-    })
-})//End of delete
-
+  MovieModel.deleteOne({ _id: req.params.id },
+  function (err, data) {
+  if (err)
+  res.send(err);
+  res.send(data);
+  })
+  })
 
 //Express Server
 app.post('/api/movies', (req, res) => {
@@ -111,8 +118,10 @@ app.post('/api/movies', (req, res) => {
 
   res.send('Item added');
 })
-
-
+//Get html index file
+app.get('*',(req,res)=>{
+  res.sendFile(path.join(__dirname+'/../build/index.html'));
+})
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })

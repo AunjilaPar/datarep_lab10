@@ -8,22 +8,29 @@ import axios from 'axios';
 export class MovieItem extends React.Component {
 
     //Constructor
-    constructor() {
+    constructor(){
         super();
         this.DeleteMovie = this.DeleteMovie.bind(this);
-    }
+        }
     //Delete Movie 
-    DeleteMovie(e) {
+    DeleteMovie(e){
         e.preventDefault();
-        console.log("Delete Clicked");
+        axios.delete('http://localhost:4000/api/movies/'+this.props.movie._id)
+        .then()
+        .catch();
+        }
 
-        axios.delete('http://localhost:4000/api/movies/' + this.props.movie._id)
-            .then(() => {
-                this.props.ReloadDataMethod();
-            })
-            .catch();
-    }
+    //Delete Button to Work
+    DeleteMovie(e){
+    console.log("Delete Clicked");
+axios.delete("http://localhost:4000/api/movies/"+this.props.movie._id)
+.then(()=>{
+this.props.ReloadDataMethod();
+})
+.catch();
+}
 
+        
     render() {
         return (//Display posters in section
             <div>
@@ -38,7 +45,8 @@ export class MovieItem extends React.Component {
                         </blockquote>
                     </Card.Body>
                     <Link to={"/edit/" + this.props.movie._id} className="btn btn-primary">Edit</Link>
-                    
+                    <Button variant="danger" onClick={this.DeleteMovie}>Delete</Button>
+
                 </Card>
 
 
